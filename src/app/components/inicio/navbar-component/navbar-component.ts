@@ -17,6 +17,7 @@ export class NavbarComponent implements OnInit {
   nombre = '';
   inicial= '';
   menuPerfil= false;
+  menuMobile = false;
 
   constructor(private authService: AuthService) {
   }
@@ -38,10 +39,15 @@ export class NavbarComponent implements OnInit {
     this.menuPerfil = !this.menuPerfil;
   }
 
+  toggleMenuMobile(): void { // ← agregar
+    this.menuMobile = !this.menuMobile;
+  }
+
   cerrarSesion(): void {
     this.authService.logout();
     this.isLoggedIn = false;
     this.menuPerfil = false;
+    this.menuMobile = false;
   }
 
 }
