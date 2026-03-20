@@ -11,6 +11,7 @@ import { TableModule } from 'primeng/table';
 import { GToast } from '../../../services/gtoast';
 import {HttpClient} from '@angular/common/http';
 import {Trabajador} from '../../../models/trabajador';
+import {environment} from '../../../../environments/environment';
 
 @Component({
   selector: 'app-servicios',
@@ -56,7 +57,7 @@ export class Servicios implements OnInit {
   }
 
   cargarTrabajadores(): void {
-    this.http.get<Trabajador[]>('http://localhost:8080/api/trabajadores').subscribe({
+    this.http.get<Trabajador[]>(`${environment.apiUrl}/api/trabajadores`).subscribe({
       next: (data) => {
         this.trabajadores = data.filter(t =>
           t.estado === 'ACTIVO' &&
@@ -113,7 +114,7 @@ export class Servicios implements OnInit {
       trabajadorIds: this.trabajadoresSeleccionados.map(t => t.id) // ✅
     };
 
-    this.http.post('http://localhost:8080/api/servicios', request).subscribe({
+    this.http.post(`${environment.apiUrl}/api/servicios`, request).subscribe({
       next: () => {
         this.displayNew = false;
         this.cargarServicios();
@@ -138,7 +139,7 @@ export class Servicios implements OnInit {
       trabajadorIds: this.trabajadoresSeleccionados.map(t => t.id)
     };
 
-    this.http.put(`http://localhost:8080/api/servicios/${this.selectedServicio.id}`, request).subscribe({
+    this.http.put(`${environment.apiUrl}/api/servicios/${this.selectedServicio.id}`, request).subscribe({
       next: () => {
         this.displayEdit = false;
         this.cargarServicios();

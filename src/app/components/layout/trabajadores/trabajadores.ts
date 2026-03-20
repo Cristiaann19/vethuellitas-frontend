@@ -11,6 +11,7 @@ import { TrabajadorService } from '../../../services/trabajador-service';
 import { ChangeDetectorRef } from '@angular/core';
 import { HttpClient} from '@angular/common/http';
 import { GToast} from '../../../services/gtoast';
+import {environment} from '../../../../environments/environment';
 
 
 @Component({
@@ -101,7 +102,7 @@ export class Trabajadores implements OnInit {
     };
     console.log('Request enviado:', request);
 
-    this.http.put(`http://localhost:8080/api/trabajadores/${this.selectedTrabajador.id}`, request)
+    this.http.put(`${environment.apiUrl}/api/trabajadores/${this.selectedTrabajador.id}`, request)
       .subscribe({
         next: () => {
           setTimeout(() => {
@@ -127,7 +128,7 @@ export class Trabajadores implements OnInit {
       correo: trabajador.correo,
     };
 
-    this.http.put(`http://localhost:8080/api/trabajadores/${trabajador.id}`, request)
+    this.http.put(`${environment.apiUrl}/api/trabajadores/${trabajador.id}`, request)
       .subscribe({
         next: () => {
           trabajador.estado = nuevoEstado;
@@ -176,7 +177,7 @@ export class Trabajadores implements OnInit {
       telefono: this.selectedTrabajador.telefono,
     };
 
-    this.http.post('http://localhost:8080/api/trabajadores', request)
+    this.http.post(`${environment.apiUrl}/api/trabajadores`, request)
       .subscribe({
         next: () => {
           setTimeout(() => {

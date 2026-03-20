@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { RouterLink } from '@angular/router';
+import { environment } from '../../../../environments/environment';
 
 interface CitaHoy {
   id: number;
@@ -47,7 +48,7 @@ export class Dashboard implements OnInit {
   }
 
   cargarDashboard(): void {
-    this.http.get<DashboardData>('http://localhost:8080/api/citas/dashboard')
+    this.http.get<DashboardData>(`${environment.apiUrl}/api/citas/dashboard`)
       .subscribe({
         next: (data) => {
           Promise.resolve().then(() => {   // ✅ evita NG0100

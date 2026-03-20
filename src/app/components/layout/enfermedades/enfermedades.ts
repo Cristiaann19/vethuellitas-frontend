@@ -12,6 +12,7 @@ import { TableModule } from "primeng/table";
 import { HttpClient } from '@angular/common/http';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { GToast } from '../../../services/gtoast';
+import {environment} from '../../../../environments/environment';
 
 interface EspecieDTO {
   id: number;
@@ -64,7 +65,7 @@ export class Enfermedades implements OnInit {
 
 
   cargarEnfermedades(): void {
-    this.http.get<EnfermedadDTO[]>('http://localhost:8080/api/enfermedades')
+    this.http.get<EnfermedadDTO[]>(`${environment.apiUrl}/api/enfermedades`)
       .subscribe({
         next: (data) => {
           setTimeout(() => {
@@ -76,6 +77,7 @@ export class Enfermedades implements OnInit {
         error: (err) => console.error(err)
       });
   }
+
 
   filtrar(): void {
     const termino = this.terminoBusqueda.toLowerCase();
@@ -140,10 +142,10 @@ export class Enfermedades implements OnInit {
       nombre: this.selectedEnfermedad.nombre,
       descripcion: this.selectedEnfermedad.descripcion,
       gravedad: this.selectedEnfermedad.gravedad,
-      especiesIds: this.selectedEspeciesIds  // ← agregar esto
+      especiesIds: this.selectedEspeciesIds
     };
 
-    this.http.post('http://localhost:8080/api/enfermedades', request)
+    this.http.post(`${environment.apiUrl}/api/enfermedades`, request) // ✅ backtick
       .subscribe({
         next: () => {
           setTimeout(() => {
@@ -152,17 +154,17 @@ export class Enfermedades implements OnInit {
             this.cargarEnfermedades();
             this.cdr.detectChanges();
           }, 0);
-          this.toast.success("Enfermedad guardada correctamente");
+          this.toast.success('Enfermedad guardada correctamente');
         },
         error: (err) => this.toast.error(err)
       });
   }
 
   cargarEspecies(): void {
-    this.http.get<EspecieDTO[]>('http://localhost:8080/api/especies')
+    this.http.get<EspecieDTO[]>(`${environment.apiUrl}/api/especies`) // ✅ backtick
       .subscribe({
         next: (data) => {
-          setTimeout(() => {        // ← agregar esto
+          setTimeout(() => {
             this.especies = data;
             this.cdr.detectChanges();
           }, 0);
@@ -178,8 +180,8 @@ export class Enfermedades implements OnInit {
       gravedad: this.selectedEnfermedad.gravedad.toUpperCase(),
       especiesIds: this.selectedEspeciesIds
     };
-    this.toast.success("Enfermedad guardada correctamente")
-    this.http.put(`http://localhost:8080/api/enfermedades/${this.selectedEnfermedad.id}`, request)
+    this.toast.success('Enfermedad guardada correctamente');
+    this.http.put(`${environment.apiUrl}/api/enfermedades/${this.selectedEnfermedad.id}`, request) // ✅ ya tenía backtick
       .subscribe({
         next: () => {
           setTimeout(() => {
@@ -190,7 +192,6 @@ export class Enfermedades implements OnInit {
         },
         error: (err) => this.toast.error(err)
       });
-
   }
 
 }

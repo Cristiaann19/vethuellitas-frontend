@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { ChangeDetectorRef} from '@angular/core';
 import { GToast} from '../../services/gtoast';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -73,7 +74,7 @@ export class Login {
 
   registrarse(): void {
     this.errorMsg = '';
-    this.http.post('http://localhost:8080/api/auth/registro/cliente', this.registerData, { responseType: 'text' })
+    this.http.post(`${environment.apiUrl}/api/auth/registro/cliente`, this.registerData, { responseType: 'text' })
       .subscribe({
         next: () => {
           this.toast.contrast("Cuenta creada, inicia sesión");

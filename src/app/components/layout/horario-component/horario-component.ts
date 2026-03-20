@@ -14,6 +14,7 @@ import { Trabajador } from '../../../models/trabajador';
 import { GToast } from '../../../services/gtoast';
 import {DIAS_SEMANA, DiaSemana, Horario} from '../../../models/horario';
 import {HorarioService} from '../../../services/horario-service';
+import {environment} from '../../../../environments/environment';
 
 @Component({
   selector: 'app-horario-component',
@@ -53,7 +54,7 @@ export class HorarioComponent implements OnInit {
   }
 
   cargarTrabajadores(): void {
-    this.http.get<Trabajador[]>('http://localhost:8080/api/trabajadores').subscribe({
+    this.http.get<Trabajador[]>(`${environment.apiUrl}/api/trabajadores`).subscribe({
       next: (data) => {
         Promise.resolve().then(() => {
           this.trabajadores = data;

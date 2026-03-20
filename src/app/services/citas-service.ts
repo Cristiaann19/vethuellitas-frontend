@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Cita, CitaRequestDTO, Mascota, TrabajadorDisponible } from '../models/cita';
+import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class CitasService {
-  private url = 'http://localhost:8080/api/citas';
+  private url = `${environment.apiUrl}/api/citas`;
 
   constructor(private http: HttpClient) {}
 
