@@ -29,7 +29,6 @@ export class Mascotas implements OnInit {
 
   terminoBusqueda = '';
 
-  // ✅ todos en false por defecto
   displayEdit = false;
   displayNew = false;
   displayDelete = false;

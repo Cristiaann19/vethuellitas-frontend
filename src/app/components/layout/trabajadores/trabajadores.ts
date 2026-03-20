@@ -47,7 +47,7 @@ export class Trabajadores implements OnInit {
   listarTrabajadores() {
     this.trabajadorService.listarTrabajadores().subscribe({
       next: (data) => {
-        setTimeout(() => {          // ← faltaba esto
+        setTimeout(() => {
           this.trabajadores = data;
           this.filtrar();
           this.cdr.detectChanges();

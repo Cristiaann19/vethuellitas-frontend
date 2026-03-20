@@ -8,7 +8,7 @@ import {VentaService} from '../../../services/venta-service';
 @Component({
   selector: 'app-ventas',
   standalone: true,
-  imports: [CommonModule, FormsModule, TableModule], // ✅ TableModule para p-table
+  imports: [CommonModule, FormsModule, TableModule],
   templateUrl: './ventas.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

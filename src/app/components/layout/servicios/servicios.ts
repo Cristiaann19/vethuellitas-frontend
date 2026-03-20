@@ -15,6 +15,7 @@ import {environment} from '../../../../environments/environment';
 
 @Component({
   selector: 'app-servicios',
+  standalone: true,
   imports: [CommonModule, FormsModule, DialogModule, ButtonModule, InputTextModule, PaginatorModule, TableModule],
   templateUrl: './servicios.html',
   changeDetection: ChangeDetectionStrategy.OnPush
