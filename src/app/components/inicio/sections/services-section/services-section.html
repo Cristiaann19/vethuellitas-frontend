@@ -1,0 +1,47 @@
+<section id="services" class="py-32 px-6 bg-[#050505] text-white">
+  <div class="max-w-7xl mx-auto">
+    <div class="mb-20">
+      <span class="!font-mono text-xs uppercase tracking-[0.3em] text-white/40 mb-4 block">
+        Ofrecemos
+      </span>
+      <h2 class="text-5xl md:text-7xl !font-display">
+        Excelentes Servicios
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-1">
+      <div
+        *ngFor="let servicio of serviciosMostrados; let i = index"
+        class="p-10 border border-white/5 hover:bg-white/5 transition-colors group"
+      >
+        <span class="font-mono text-xs opacity-20 group-hover:opacity-100 transition-opacity mb-8 block">
+          0{{ i + 1 }}
+        </span>
+
+        <span class="material-symbols-outlined text-3xl mb-4 block opacity-60 group-hover:opacity-100 transition-opacity">
+          {{ servicio.icono }}
+        </span>
+
+        <h3 class="text-2xl font-display mb-4">{{ servicio.nombre }}</h3>
+
+        <p class="text-sm text-white/50 leading-relaxed mb-6">{{ servicio.descripcion }}</p>
+
+        <div class="flex items-center justify-between">
+          <span class="font-mono text-sm text-white/70">
+            S/. {{ servicio.precio }}
+          </span>
+
+          <span
+            class="font-mono text-[10px] uppercase tracking-widest px-2 py-1"
+            [ngClass]="{
+              'text-emerald-400 bg-emerald-400/10': servicio.estado === 'ACTIVO',
+              'text-red-400 bg-red-400/10': servicio.estado === 'INACTIVO'
+            }"
+          >
+            {{ servicio.estado }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
