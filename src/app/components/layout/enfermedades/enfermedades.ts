@@ -145,7 +145,7 @@ export class Enfermedades implements OnInit {
       especiesIds: this.selectedEspeciesIds
     };
 
-    this.http.post(`${environment.apiUrl}/api/enfermedades`, request) // ✅ backtick
+    this.http.post(`${environment.apiUrl}/api/enfermedades`, request)
       .subscribe({
         next: () => {
           setTimeout(() => {
@@ -161,7 +161,7 @@ export class Enfermedades implements OnInit {
   }
 
   cargarEspecies(): void {
-    this.http.get<EspecieDTO[]>(`${environment.apiUrl}/api/especies`) // ✅ backtick
+    this.http.get<EspecieDTO[]>(`${environment.apiUrl}/api/especies`)
       .subscribe({
         next: (data) => {
           setTimeout(() => {
@@ -181,7 +181,7 @@ export class Enfermedades implements OnInit {
       especiesIds: this.selectedEspeciesIds
     };
     this.toast.success('Enfermedad guardada correctamente');
-    this.http.put(`${environment.apiUrl}/api/enfermedades/${this.selectedEnfermedad.id}`, request) // ✅ ya tenía backtick
+    this.http.put(`${environment.apiUrl}/api/enfermedades/${this.selectedEnfermedad.id}`, request)
       .subscribe({
         next: () => {
           setTimeout(() => {

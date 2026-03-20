@@ -51,10 +51,10 @@ export class Dashboard implements OnInit {
     this.http.get<DashboardData>(`${environment.apiUrl}/api/citas/dashboard`)
       .subscribe({
         next: (data) => {
-          Promise.resolve().then(() => {   // ✅ evita NG0100
+          Promise.resolve().then(() => {
             this.data = { ...data };
             this.cargando = false;
-            this.cdr.markForCheck();       // ✅
+            this.cdr.markForCheck();
           });
         },
         error: (err) => {
@@ -81,7 +81,6 @@ export class Dashboard implements OnInit {
     });
   }
 
-  // % de citas por estado para el resumen
   get citasPorEstado(): { label: string; count: number; color: string }[] {
     const estados = ['PENDIENTE', 'CONFIRMADA', 'REALIZADA', 'CANCELADA'];
     const colores: Record<string, string> = {

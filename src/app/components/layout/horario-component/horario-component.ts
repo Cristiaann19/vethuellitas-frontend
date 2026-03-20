@@ -18,6 +18,7 @@ import {environment} from '../../../../environments/environment';
 
 @Component({
   selector: 'app-horario-component',
+  standalone: true,
   imports: [CommonModule, FormsModule, DialogModule, ButtonModule],
   templateUrl: './horario-component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
