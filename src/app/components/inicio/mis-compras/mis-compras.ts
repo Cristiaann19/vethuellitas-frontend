@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { VentaService } from '../../../services/venta-service';
 import { Venta } from '../../../models/carrito';
 import {RouterLink} from '@angular/router';
+import { PdfService } from '../../../services/pdf-service';
 
 @Component({
   selector: 'app-mis-compras',
@@ -16,7 +17,7 @@ export class MisCompras implements OnInit {
   ventaExpandida: number | null = null;
   cargando = true;
 
-  constructor(private ventaService: VentaService, private cdr: ChangeDetectorRef) {}
+  constructor(private ventaService: VentaService, private cdr: ChangeDetectorRef, private pdfService : PdfService) {}
 
   ngOnInit(): void {
     const clienteId = Number(localStorage.getItem('clienteId'));
@@ -42,5 +43,9 @@ export class MisCompras implements OnInit {
 
   get totalGastado(): number {
     return this.ventas.reduce((acc, v) => acc + v.total, 0);
+  }
+
+  descargarBoleta(venta: any): void {
+    this.pdfService.generarBoletaVenta(venta);
   }
 }
