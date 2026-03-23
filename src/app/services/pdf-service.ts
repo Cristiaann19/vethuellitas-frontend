@@ -6,13 +6,11 @@ import autoTable from 'jspdf-autotable';
   providedIn: 'root',
 })
 export class PdfService {
-  generarBoletaVenta(venta: any): void {
+  async generarBoletaVenta(venta: any): Promise<void> {
     const doc = new jsPDF();
-
     // Header
     doc.setFillColor(45, 106, 79); // verde #2d6a4f
     doc.rect(0, 0, 210, 35, 'F');
-
     doc.setTextColor(255, 255, 255);
     doc.setFontSize(22);
     doc.setFont('helvetica', 'bold');
@@ -23,18 +21,29 @@ export class PdfService {
     doc.text('Clínica Veterinaria', 15, 22);
     doc.text('Av. Sáenz Peña 580, Chiclayo, Perú', 15, 28);
 
-    // Título boleta
+    const logoUrl = 'https://lmuclkgmsvlusqgqbqyn.supabase.co/storage/v1/object/public/Peluche/logo.png';
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.src = logoUrl;
+
+    await new Promise((resolve) => {
+      img.onload = () => {
+        let jsPDF1 = doc.addImage(img, 'PNG', 155, 5, 40, 25);
+        resolve(null);
+      };
+      img.onerror = () => resolve(null);
+    });
+
+
     doc.setTextColor(45, 106, 79);
     doc.setFontSize(16);
     doc.setFont('helvetica', 'bold');
     doc.text('BOLETA DE VENTA', 105, 50, { align: 'center' });
 
-    // Línea separadora
     doc.setDrawColor(82, 183, 136);
     doc.setLineWidth(0.5);
     doc.line(15, 55, 195, 55);
 
-    // Info venta
     doc.setTextColor(50, 50, 50);
     doc.setFontSize(10);
     doc.setFont('helvetica', 'normal');
@@ -59,22 +68,20 @@ export class PdfService {
     doc.setTextColor(45, 106, 79);
     doc.text(venta.estado, 50, 79);
 
-    // Info cliente
     doc.setTextColor(50, 50, 50);
     doc.setFont('helvetica', 'normal');
     doc.text(`Cliente:`, 120, 65);
     doc.setFont('helvetica', 'bold');
-    const nombreCliente = venta.cliente
-      ? `${venta.cliente.nombres} ${venta.cliente.apellidos}`
-      : 'Cliente';
-    doc.text(nombreCliente, 145, 65);
+    doc.text(`${venta.cliente.nombres}`, 145, 65);
 
     doc.setFont('helvetica', 'normal');
-    doc.text(`Correo:`, 120, 72);
-    doc.setFont('helvetica', 'bold');
-    doc.text(venta.cliente?.correo || '-', 145, 72);
+    doc.text(`${venta.cliente.apellidos}`, 145, 72);
 
-    // Tabla de productos
+    doc.setFont('helvetica', 'normal');
+    doc.text(`Correo:`, 120, 80);
+    doc.setFont('helvetica', 'bold');
+    doc.text(venta.cliente?.correo || '-', 145, 80);
+
     doc.setTextColor(50, 50, 50);
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(11);
@@ -106,7 +113,6 @@ export class PdfService {
       margin: { left: 15, right: 15 }
     });
 
-    // Total
     const finalY = (doc as any).lastAutoTable.finalY + 8;
 
     doc.setDrawColor(82, 183, 136);
@@ -120,14 +126,12 @@ export class PdfService {
     doc.setFontSize(14);
     doc.text(`S/ ${Number(venta.total).toFixed(2)}`, 195, finalY + 8, { align: 'right' });
 
-    // Footer
     doc.setFontSize(8);
     doc.setTextColor(150, 150, 150);
     doc.setFont('helvetica', 'normal');
     doc.text('Gracias por confiar en Huellitas Vet', 105, 280, { align: 'center' });
     doc.text('cristianJ@huellitasvet.com  |  +51 999 999 999', 105, 285, { align: 'center' });
 
-    // Descargar
     doc.save(`boleta-${String(venta.id).padStart(4, '0')}.pdf`);
   }
 }
